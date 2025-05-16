@@ -52,14 +52,14 @@ jobs:
     - name: Crear AVD
       run: |
             echo "Creando AVD..."
-            echo "no" | avdmanager create avd -n Pixel_6_Pro -k "system-images;android-30;google_apis;x86_64" --device "pixel_6"
+            echo "no" | avdmanager create avd -n Pixel_5 -k "system-images;android-30;google_apis;x86_64" --device "pixel_5"
             emulator -list-avds
 
     - name: Iniciar emulador
       run: |
         adb devices
         echo "Iniciando emulador..."
-        emulator -avd Pixel_6_Pro -no-window -no-audio &
+        emulator -avd pixel_5 -no-window -no-audio &
         adb wait-for-device
         adb shell input keyevent 82     
 
