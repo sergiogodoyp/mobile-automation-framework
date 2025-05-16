@@ -12,11 +12,11 @@ jobs:
 
     services:
       appium:
-        image: appium/appium
+        image: appium/appium:latest
         ports:
           - 4723:4723
         options: >-
-          --health-cmd="curl -f http://localhost:4723/wd/hub/status || exit 1"
+          --health-cmd="curl -f http://localhost:4723/status || exit 1"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
