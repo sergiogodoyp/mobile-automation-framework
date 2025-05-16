@@ -43,11 +43,14 @@ jobs:
     - name: Agregar herramientas de Android al PATH
       run: echo "${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools" >> $GITHUB_PATH
 
+    - name: Instalar sistema de imágenes de Android
+      run: sdkmanager "system-images;android-30;google_apis;x86_64"
+
     - name: Crear AVD
       run: |
-        echo "Creando AVD..."
-        echo "no" | avdmanager create avd -n Pixel_6_Pro -k "system-images;android-30;google_apis;x86_64" --device "pixel_6_pro"
-        emulator -list-avds
+            echo "Creando AVD..."
+            echo "no" | avdmanager create avd -n Pixel_6_Pro -k "system-images;android-30;google_apis;x86_64" --device "pixel_6_pro"
+            emulator -list-avds
 
     - name: Iniciar emulador
       run: |
