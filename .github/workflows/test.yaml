@@ -37,7 +37,7 @@ jobs:
         api-level: 30
         target: default
         arch: x86_64
-        profile: Pixel_6_Pro
+        profile: Pixel_5
         emulator-options: "-no-window -no-audio"
 
     - name: Agregar herramientas de Android al PATH
@@ -63,9 +63,10 @@ jobs:
 
     - name: Iniciar y esperar emulador
       run: |
-        adb devices
+        set +e
         echo "Iniciando emulador..."
         nohup emulator -avd Pixel_5 -no-window -no-audio -wipe-data > /dev/null 2>&1 &
+        set -e
         # Esperar a que esté disponible
         bootanim=""
         until [[ "$bootanim" =~ "stopped" ]]; do
@@ -73,6 +74,7 @@ jobs:
           echo "Esperando que finalice bootanim: $bootanim"
           sleep 5
         done
+        adb devices
         adb shell input keyevent 82 || echo "No se pudo desbloquear con input keyevent"
 
     - name: Instalar APK
