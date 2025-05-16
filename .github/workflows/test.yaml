@@ -31,6 +31,23 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Configurar Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        api-level: 30
+        target: default
+        arch: x86_64
+        profile: Pixel_6_Pro
+        emulator-options: "-no-window -no-audio"
+
+    - name: Iniciar emulador
+      run: |
+        adb devices
+        echo "Iniciando emulador..."
+        emulator -avd Pixel_6_Pro -no-window -no-audio &
+        adb wait-for-device
+        adb shell input keyevent 82     
+
     - name: Instalar dependencias
       run: mvn install -DskipTests
 
