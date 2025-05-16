@@ -61,13 +61,19 @@ jobs:
             sudo usermod -aG kvm $USER
             sudo chmod 666 /dev/kvm
 
-    - name: Iniciar emulador
+    - name: Iniciar y esperar emulador
       run: |
         adb devices
         echo "Iniciando emulador..."
-        emulator -avd Pixel_5 -no-window -no-audio -wipe-data &
-        adb wait-for-device
-        adb shell input keyevent 82 
+        nohup emulator -avd Pixel_5 -no-window -no-audio -wipe-data > /dev/null 2>&1 &
+        # Esperar a que esté disponible
+        bootanim=""
+        until [[ "$bootanim" =~ "stopped" ]]; do
+          bootanim=$(adb -e shell getprop init.svc.bootanim 2>&1)
+          echo "Esperando que finalice bootanim: $bootanim"
+          sleep 5
+        done
+        adb shell input keyevent 82 || echo "No se pudo desbloquear con input keyevent"
 
     - name: Instalar APK
       run: adb install app/Android-NativeDemoApp-0.4.0.apk # Reemplaza con la ruta de tu APK
