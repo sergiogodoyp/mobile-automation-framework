@@ -43,6 +43,12 @@ jobs:
     - name: Agregar herramientas de Android al PATH
       run: echo "${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools" >> $GITHUB_PATH
 
+    - name: Crear AVD
+      run: |
+        echo "Creando AVD..."
+        echo "no" | avdmanager create avd -n Pixel_6_Pro -k "system-images;android-30;google_apis;x86_64" --device "pixel_6_pro"
+        emulator -list-avds
+
     - name: Iniciar emulador
       run: |
         adb devices
@@ -53,7 +59,6 @@ jobs:
 
     - name: Instalar APK
       run: adb install app/Android-NativeDemoApp-0.4.0.apk # Reemplaza con la ruta de tu APK
-
 
     - name: Instalar dependencias
       run: mvn install -DskipTests
