@@ -46,10 +46,13 @@ jobs:
     - name: Instalar sistema de imágenes de Android
       run: sdkmanager "system-images;android-30;google_apis;x86_64"
 
+    - name: Listar dispositivos disponibles
+      run: avdmanager list device
+
     - name: Crear AVD
       run: |
             echo "Creando AVD..."
-            echo "no" | avdmanager create avd -n Pixel_6_Pro -k "system-images;android-30;google_apis;x86_64" --device "pixel_6_pro"
+            echo "no" | avdmanager create avd -n Pixel_6_Pro -k "system-images;android-30;google_apis;x86_64" --device "pixel_6"
             emulator -list-avds
 
     - name: Iniciar emulador
