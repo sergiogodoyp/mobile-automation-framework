@@ -55,6 +55,13 @@ jobs:
             echo "no" | avdmanager create avd -n Pixel_5 -k "system-images;android-30;google_apis;x86_64" --device "pixel_5"
             emulator -list-avds
 
+    - name: Configurar permisos de KVM
+      run: |
+            sudo groupadd -r kvm || true
+            sudo gpasswd -a $USER kvm
+            sudo chmod 666 /dev/kvm
+            newgrp kvm    
+
     - name: Iniciar emulador
       run: |
         adb devices
