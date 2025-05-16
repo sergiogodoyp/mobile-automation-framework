@@ -58,9 +58,8 @@ jobs:
     - name: Configurar permisos de KVM
       run: |
             sudo groupadd -r kvm || true
-            sudo gpasswd -a $USER kvm
+            sudo usermod -aG kvm $USER
             sudo chmod 666 /dev/kvm
-            newgrp kvm    
 
     - name: Iniciar emulador
       run: |
