@@ -65,9 +65,9 @@ jobs:
       run: |
         adb devices
         echo "Iniciando emulador..."
-        emulator -avd Pixel_5 -no-window -no-audio &
+        emulator -avd Pixel_5 -no-window -no-audio -wipe-data &
         adb wait-for-device
-        adb shell input keyevent 82     
+        adb shell input keyevent 82 
 
     - name: Instalar APK
       run: adb install app/Android-NativeDemoApp-0.4.0.apk # Reemplaza con la ruta de tu APK
